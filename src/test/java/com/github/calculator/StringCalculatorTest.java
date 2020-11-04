@@ -9,27 +9,35 @@ public class StringCalculatorTest {
 	private StringCalculator calc = new StringCalculator();
 	
 	@Test
-	public void testEmptyString() {
+	public void testEmptyStringTest() throws Exception {
 		assertEquals(0, calc.add(""));
 	}
 	
 	@Test
-	public void testSingleNumber() {
+	public void testSingleNumberTest() throws Exception {
 		assertEquals(1, calc.add("1"));
 	}
 	
 	@Test
-	public void testTwoNumber() {
+	public void testTwoNumberTest() throws Exception {	
 		assertEquals(3, calc.add("1,2"));
 	}
 	
 	@Test
-	public void testTwoNumberWithNewLine() {
+	public void testTwoNumberWithNewLineTest() throws Exception {
 		assertEquals(6, calc.add("1\n2,3"));
 	}
 	
 	@Test
-	public void defaultDelimiter() {
+	public void defaultDelimiterTest() throws Exception {
 		assertEquals(6, calc.add("//;\n2;3\n1"));
 	}
+	
+	@Test
+	public void negativeExceptionTest() throws Exception {
+		Exception exception = assertThrows(Exception.class, () -> calc.add("1,2,-3"));
+		assertEquals(exception.getMessage(), "negatives not allowed [-3]");
+	}
+	
+	
 }
