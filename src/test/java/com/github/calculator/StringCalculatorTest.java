@@ -23,7 +23,13 @@ public class StringCalculatorTest {
 		assertEquals(3, calc.add("1,2"));
 	}
 	
+	@Test
 	public void testTwoNumberWithNewLine() {
 		assertEquals(6, calc.add("1\n2,3"));
+	}
+	
+	@Test
+	public void defaultDelimiter() {
+		assertEquals(6, calc.add("//;\n2;3\n1"));
 	}
 }
