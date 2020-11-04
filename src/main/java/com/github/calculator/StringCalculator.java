@@ -7,15 +7,21 @@ import java.util.Optional;
 public class StringCalculator {
         
     public int add(String numbers) throws Exception {
-    	String delimiter = "";
+    	List<String> delimiters = new ArrayList<>();
+    	delimiters.add(",");delimiters.add("\n");
     	if(numbers.startsWith("//")) {
-    		delimiter = numbers.substring(0, numbers.indexOf('\n')).replace("//", "");
+    		String delimiterString = numbers.substring(2, numbers.indexOf('\n'));
+    		int start = -1, end = -1;
+    		while( (start = delimiterString.indexOf('[', end + 1)) != -1 && (end = delimiterString.indexOf(']', end + 1)) != -1) {
+    			delimiters.add(delimiterString.substring(start + 1, end));
+    		}
     		numbers = numbers.substring(numbers.indexOf('\n') + 1 , numbers.length());
     	}
-        if(numbers.equals(""))
+    	String replaceRegex = delimiters.stream().map(str -> "\\Q" + str + "\\E").reduce((a, b) -> a + "|" + b).get();
+    	if(numbers.equals(""))
                 return 0;
-        if(numbers.contains(",") || numbers.contains("\n") || numbers.contains(delimiter)) {
-                String delimiterSplit = "[,\n" + delimiter + "]";
+		if(delimiters.stream().anyMatch(numbers::contains)) {
+                String delimiterSplit = replaceRegex;
                 String[] split = numbers.split(delimiterSplit);
                 Optional<Integer> sum = convertStringToInt(split).stream().reduce((a, b) -> a+b);
                 return sum.get();
@@ -23,7 +29,7 @@ public class StringCalculator {
         return Integer.parseInt(numbers);
     }
     
-    public List<Integer> convertStringToInt(String[] numbers) throws Exception {
+    private List<Integer> convertStringToInt(String[] numbers) throws Exception {
     	List<Integer> negativeNumbers = new ArrayList<>();
     	List<Integer> validNumbers = new ArrayList<>();
     	for (int i = 0; i < numbers.length; i++) {

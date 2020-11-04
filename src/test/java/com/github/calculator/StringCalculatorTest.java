@@ -44,5 +44,9 @@ public class StringCalculatorTest {
 		assertEquals(6, calc.add("2,3,1001,1,5306"));
 	}
 	
+	@Test
+	public void defaultDelimitersTest() throws Exception {
+		assertEquals(6, calc.add("//[****][++++]\n2****3++++1"));
+	}
 	
 }
