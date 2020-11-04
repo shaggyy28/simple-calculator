@@ -39,5 +39,10 @@ public class StringCalculatorTest {
 		assertEquals(exception.getMessage(), "negatives not allowed [-3]");
 	}
 	
+	@Test
+	public void ignoreMoreThan1000Test() throws Exception {
+		assertEquals(6, calc.add("2,3,1001,1,5306"));
+	}
+	
 	
 }

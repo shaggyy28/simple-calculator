@@ -30,7 +30,7 @@ public class StringCalculator {
 			int num = Integer.parseInt(numbers[i]);
 			if(num < 0)
 				negativeNumbers.add(num);
-			else
+			else if(num >= 0 && num <= 1000)
 				validNumbers.add(num);
 		}
     	if(!negativeNumbers.isEmpty()) throw new Exception("negatives not allowed " + negativeNumbers);
